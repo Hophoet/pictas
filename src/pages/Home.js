@@ -3,19 +3,29 @@ import React, {useState} from 'react';
 import { useStateValue } from '../redux/StateProvider'
 import { getPictures } from '../api/functions'
 import { useEffect } from 'react';
+import {useHistory} from 'react-router-dom'
 import {motion} from 'framer-motion';
 import '../styles/Home.css';
 
 function Home() {
   const [pictures, setPictures] = useState([]);
   const [{user}, dispatch] = useStateValue();
+  const history = useHistory();
 	useEffect(() => {
+    _checkAuth();
     if(user){
       _getPictures(user.uid)
       
     }
 
-	}, [user])	
+  }, [user])	
+  
+
+  const _checkAuth = () => {
+      if(!user){
+        history.push('/auth');
+      }
+  }
 
   const _getPictures = () => {
     let userId = user.uid;
