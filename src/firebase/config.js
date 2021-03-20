@@ -1,24 +1,27 @@
 
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
+import "firebase/auth";
 import 'firebase/storage';
 import 'firebase/firestore';
 
 var firebaseConfig = {
- 	apiKey: "AIzaSyBRuSUDxkoll50qmwAPBcStsMu62C7GdXs",
-    authDomain: "train-app-105b7.firebaseapp.com",
-    databaseURL: "https://train-app-105b7.firebaseio.com",
-    projectId: "train-app-105b7",
-    storageBucket: "train-app-105b7.appspot.com",
-    messagingSenderId: "733969777138",
-    appId: "1:733969777138:web:493007095644585f166b6b",
-    measurementId: "G-GNVYJR4KQY"
+    apiKey: "AIzaSyA7RiUBnZIXAGBVt4vrXOADeTzJvG_c1tw",
+    authDomain: "pictas-fe1c7.firebaseapp.com",
+    databaseURL: "https://pictas-fe1c7-default-rtdb.firebaseio.com",
+    projectId: "pictas-fe1c7",
+    storageBucket: "pictas-fe1c7.appspot.com",
+    messagingSenderId: "389523068927",
+    appId: "1:389523068927:web:47fbca2cb6db72b40df9ca",
+    measurementId: "G-QGP8Y6NQQE"
+
 };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-const projectStorage = firebase.storage();
-const projectFirestore = firebase.firestore();
+const storage = firebase.storage();
+const firestore = firebase.firestore();
 const timestamp = firebase.firestore.FieldValue.serverTimestamp;
+const auth = firebase.auth();
 
-export { projectStorage, projectFirestore, timestamp };
+export { storage, firestore, timestamp, auth };
