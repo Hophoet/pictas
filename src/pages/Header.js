@@ -63,9 +63,11 @@ function Header() {
                     </div>
                 </Link>
                 <div className="header__option">
+                    { user &&
                     <button onClick={addPicture}>
                         <AddAPhotoIcon/>
                     </button>
+                    }
                 </div>
             </div>
             { addPictureModalIsShow &&(
