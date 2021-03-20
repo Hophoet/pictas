@@ -61,13 +61,15 @@ export default class AddPictureModal extends React.Component{
 
   savePicture = () => {
       //uploadImage()
-      uploadImage(this.state.user.uid, this.state.file)
-      .then(response => {
-          console.log('update response', response);
-      })
-      .catch(error => {
-          console.log(error);
-      })
+      if(this.state.user){
+        uploadImage(this.state.user.uid, this.state.file)
+        .then(response => {
+            console.log('update response', response);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
   }
 
 
