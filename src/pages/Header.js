@@ -62,6 +62,14 @@ function Header() {
                         <span className='header__optionLineTwo'>{user? 'Sign Out': 'Sign In'}</span>
                     </div>
                 </Link>
+                { user &&
+            	<Link to="/checkout">
+                    <div  className="header__option">
+                        <span className='header__optionLineOne'>gerer les</span>
+                        <span className='header__optionLineTwo'>Clients</span>
+                    </div>
+                </Link>
+                }
                 <div className="header__option">
                     { user &&
                     <button onClick={addPicture}>
@@ -69,6 +77,7 @@ function Header() {
                     </button>
                     }
                 </div>
+                
             </div>
             { addPictureModalIsShow &&(
                 <AddPictureModal user={user} clients={clients} toggleModal={toggleAddPictureModalIsShow} modalIsShow={addPictureModalIsShow}/>
