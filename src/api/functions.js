@@ -162,7 +162,7 @@ function updateClient(clientId, name, password){
             name:name,
             password:password
         }
-        firestore()
+        firestore
         .doc('clients/'+clientId)
         .update(client => {
 
@@ -179,7 +179,7 @@ function updateClient(clientId, name, password){
 
 function deleteClient(id){
     return new Promise( (resolve, reject) => { 
-        firestore()
+        firestore
         .collection('clients')
         .doc(id)
         .delete()
@@ -198,5 +198,7 @@ export {
     uploadImage,
     setPicture,
     getPictureClient,
-    addClient
+    addClient,
+    updateClient,
+    deleteClient
 }
