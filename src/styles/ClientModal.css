@@ -1,0 +1,37 @@
+
+.modalcontainer{
+    background:white;
+    min-height: 80vh;
+    margin:50px;
+    width: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.modalcontainer > .imagecontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fileuploadinput{
+    height: 0;
+    width: 0;
+    opacity: 0;
+}
+.selectedImage{
+    width: 40%;
+    height: auto;
+    margin:0;
+}
+
+.clientselectform{
+    margin:1px;
+    min-width: 120px;
+}
+.modalcontainer > .imagecontainer > .output{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: center;
+}
