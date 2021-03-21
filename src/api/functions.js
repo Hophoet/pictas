@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import { firestore, storage } from '../firebase/config'
+import { firestore, storage, timestamp } from '../firebase/config'
 
 
 function getPictures(userId){
@@ -26,9 +26,9 @@ function getPictures(userId){
 
 function uploadImage(userId, file){
     return new Promise( (resolve, reject) => {
-    const picRef = firestore.ref(file.name);
+    const picRef = storage.ref('pictures/'+file.name);
     const colRef = firestore.collection('pictures');
-    const task = picRef.putFile(file)
+    const task = picRef.put(file)
     task.then(() => {
         picRef.getDownloadURL()
         .then((downloadURL) => {
@@ -48,9 +48,10 @@ function setPicture(userId, clientId, url){
         let picture = {
             clientId:clientId,
             url:url,
-            userId:userId
+            userId:userId,
+            createdAt:timestamp
         }
-        firestore()
+        firestore
         .collection('pictures')
         .add(picture)
         .then(snapshot => {
@@ -176,5 +177,6 @@ function deleteClient(id){
 export {
     getPictures,
     getClients,
-    uploadImage
+    uploadImage,
+    setPicture
 }
