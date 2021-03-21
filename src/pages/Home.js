@@ -6,10 +6,14 @@ import { useEffect } from 'react';
 import {useHistory} from 'react-router-dom'
 import {motion} from 'framer-motion';
 import '../styles/Home.css';
+import PictureModal from '../components/PictureModal';
+
 
 function Home() {
+  const [selectedPicture, setSelectedPicture] = useState(null);
   const [pictures, setPictures] = useState([]);
   const [{user}, dispatch] = useStateValue();
+
   const history = useHistory();
 	useEffect(() => {
     _checkAuth();
@@ -23,7 +27,7 @@ function Home() {
 
   const _checkAuth = () => {
       if(!user){
-        history.push('/auth');
+        //history.push('/auth');
       }
   }
 
@@ -42,13 +46,13 @@ function Home() {
   }
   
   return (
-    <div className="App">
+    <div className="home-container">
       <div className="img-grid">
         {pictures && pictures.map(picture => (
           <motion.div className="img-wrap" key={picture.id} 
             layout
             whileHover={{ opacity: 1 }}
-            onClick={() => {}}
+            onClick={() => { setSelectedPicture(picture)}}
           >
             <motion.img src={picture.url} alt="uploaded pic"
               initial={{ opacity: 0 }}
@@ -58,6 +62,9 @@ function Home() {
           </motion.div>
         ))}
       </div>
+      { selectedPicture && (
+        <PictureModal selectedPicture={selectedPicture} setSelectedPicture={setSelectedPicture} />
+      )}
     </div>
   );
 } 
