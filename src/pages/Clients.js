@@ -6,14 +6,14 @@ import PersonAdd from '@material-ui/icons/PersonAdd'
 import {Link} from 'react-router-dom'
 import { useStateValue } from '../redux/StateProvider'
 import {auth} from '../firebase/config'
-import { getClients } from '../api/functions'
+import { getClients, deleteClient } from '../api/functions'
 import { useEffect } from 'react';
 import ClientModal from '../components/ClientModal';
 
 
 function Client() {
     const [clients, setClients] = useState([]);
-    const [client, setClient] = useState([]);
+    const [client, setClient] = useState({});
     const [modalIsShow, toggleModal] = useState(false)
     const [{user}, dispatch] = useStateValue()
 
@@ -44,16 +44,30 @@ function Client() {
          }
     }
 
+    const _deleteClient = (id) => {
+        deleteClient(id) 
+        .then(response => {
+            console.log('client deleted')
+            console.log(response);
+        })
+        .catch(error => {
+            console.log('client delete failed')
+            console.log(error);
+        })
+    }
+
     return (
         <div className='container'>
             <h1>clients</h1>
             <button onClick={_toggleModal}>
                 <PersonAdd/> 
             </button>
+            <p onClick={_deleteClient}>text client</p>
             {clients && clients.map(client => (
                 <div>
                     <h4>{client.name}</h4>
                     <p>{client.password}</p>
+                    <button>delete</button>
                 </div>
             ))
             }
