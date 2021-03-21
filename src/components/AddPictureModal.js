@@ -1,15 +1,16 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import { motion } from 'framer-motion';
 import AddAPhotoOutlined from '@material-ui/icons/AddAPhotoOutlined'
 import '../styles/AddPictureModal.css';
-import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { uploadImage } from '../api/functions';
+import { uploadImage, setPicture } from '../api/functions';
+
+
 
 export default class AddPictureModal extends React.Component{
     constructor(props){
@@ -21,9 +22,10 @@ export default class AddPictureModal extends React.Component{
             fileURL:'',
             clients:[],
             user:this.props.user
-        }
+       }
         this.fileTypes = ['image/png', 'image/jpeg'];
     }
+
 
     setPack = (pack) =>{
         this.setState({pack:pack});
@@ -62,13 +64,27 @@ export default class AddPictureModal extends React.Component{
   savePicture = () => {
       //uploadImage()
       if(this.state.user){
-        uploadImage(this.state.user.uid, this.state.file)
-        .then(response => {
-            console.log('update response', response);
-        })
-        .catch(error => {
-            console.log(error);
-        })
+        if(this.state.pack){
+            uploadImage(this.state.user.uid, this.state.file)
+            .then(response => {
+                console.log('update response', response);
+                setPicture(this.state.user.uid, this.state.pack, response)
+                .then(response => {
+                    this.props.toggleModal();
+                })
+                .catch(error => {
+                    console.log('erreur');
+                    console.log(error);
+                })
+
+            })
+            .catch(error => {
+                console.log('erreur');
+            })
+        }
+        else{
+            alert('select the client');
+        }
     }
   }
 
