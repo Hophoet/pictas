@@ -2,6 +2,24 @@ import { resolve } from 'path';
 import { firestore, storage, timestamp } from '../firebase/config'
 
 
+function getPictureClient(clientId){
+   return new Promise( (resolve, reject) => {
+        firestore
+        .collection('clients')
+        .doc(clientId)
+        .onSnapshot( documentSnapshot => {
+			if(documentSnapshot.data()){
+				resolve(documentSnapshot.data());
+			}
+			//client is not available, maybe deleted
+			else{
+				reject('client not exists');
+			}
+        })
+
+   })
+}
+
 function getPictures(userId){
    return new Promise( (resolve, reject) => {
        firestore
@@ -178,5 +196,6 @@ export {
     getPictures,
     getClients,
     uploadImage,
-    setPicture
+    setPicture,
+    getPictureClient
 }
