@@ -139,7 +139,7 @@ function addClient(userId, name, password){
             name:name,
             password:password
         }
-        firestore()
+        firestore
         .collection('clients')
         .add(client)
         .then(snapshot => {
@@ -197,5 +197,6 @@ export {
     getClients,
     uploadImage,
     setPicture,
-    getPictureClient
+    getPictureClient,
+    addClient
 }
