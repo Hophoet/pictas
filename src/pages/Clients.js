@@ -1,19 +1,24 @@
 
 import React, {useState } from 'react'
-import '../styles/Header.css'
-import AddAPhotoIcon from '@material-ui/icons/AddAPhoto'
+import '../styles/Clients.css';
+
+import PersonAdd from '@material-ui/icons/PersonAdd'
 import {Link} from 'react-router-dom'
 import { useStateValue } from '../redux/StateProvider'
 import {auth} from '../firebase/config'
 import { getClients } from '../api/functions'
 import { useEffect } from 'react';
+import ClientModal from '../components/ClientModal';
 
 
 function Client() {
     const [clients, setClients] = useState([]);
+    const [client, setClient] = useState([]);
+    const [modalIsShow, toggleModal] = useState(false)
     const [{user}, dispatch] = useStateValue()
 
 	useEffect(() => {
+        _getClients();
     }, [user])	
     
 
@@ -22,12 +27,15 @@ function Client() {
             auth.signOut();
         }
     }
+
+    const _toggleModal = () => {
+        toggleModal(!modalIsShow);
+    }
     
     const _getClients = () => {
         if(user){
             getClients(user.uid)
             .then(response =>{
-                console.log(response);
                 setClients(response);
             })
             .catch(error => {
@@ -39,6 +47,20 @@ function Client() {
     return (
         <div className='container'>
             <h1>clients</h1>
+            <button onClick={_toggleModal}>
+                <PersonAdd/> 
+            </button>
+            {clients && clients.map(client => (
+                <div>
+                    <h4>{client.name}</h4>
+                    <p>{client.password}</p>
+                </div>
+            ))
+            }
+      { modalIsShow && (
+        <ClientModal user={user} toggleModal={_toggleModal} client={client} setClient={setClient} />
+      )}
+
         </div>
     )
 }
