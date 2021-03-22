@@ -214,6 +214,29 @@ function clientPasswordExists(password){
 }
 
 
+function clientUsernameExists(name){
+	return new Promise( (resolve, reject) => {
+		firestore
+		.collection('clients')
+        .get()
+        .then( (querySnapshot) => {
+                querySnapshot.forEach( documentSnapshot  => {
+                    if(documentSnapshot.data()){
+                        console.log(documentSnapshot.data())
+                        if(documentSnapshot.data().name == name){
+                            resolve(true);
+                        }
+                    }
+                }); 
+                resolve(false);
+        })
+        .catch(error => {
+            reject(error);
+        })
+    })
+}
+
+
 export {
     getPictures,
     getClients,
@@ -223,5 +246,6 @@ export {
     addClient,
     updateClient,
     deleteClient,
-    clientPasswordExists
+    clientPasswordExists,
+    clientUsernameExists
 }
