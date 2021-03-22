@@ -45,15 +45,16 @@ function Client() {
     }
 
     const _deleteClient = (id) => {
-        deleteClient(id) 
-        .then(response => {
-            console.log('client deleted')
-            console.log(response);
-        })
-        .catch(error => {
-            console.log('client delete failed')
-            console.log(error);
-        })
+        if(window.confirm('Do you want delete this client?')){
+            deleteClient(id) 
+            .then(response => {
+                console.log('client deleted')
+            })
+            .catch(error => {
+                console.log('client delete failed')
+                console.log(error);
+            })
+        }
     }
 
     return (
@@ -67,7 +68,7 @@ function Client() {
                 <div>
                     <h4>{client.name}</h4>
                     <p>{client.password}</p>
-                    <button>delete</button>
+                    <button onClick={() => _deleteClient(client.id)} >delete</button>
                 </div>
             ))
             }
