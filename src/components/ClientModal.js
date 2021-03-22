@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import '../styles/ClientModal.css';
 import { addClient, updateClient } from '../api/functions';
 
-const ClientModal = ({toggleModal, setSelectedPicture, selectedPicture, user, client}) => {
+const ClientModal = ({ getClients, toggleModal, setSelectedPicture, selectedPicture, user, client}) => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
 
@@ -59,6 +59,7 @@ const ClientModal = ({toggleModal, setSelectedPicture, selectedPicture, user, cl
            console.log('client saved');
            console.log(response);
            toggleModal();
+           getClients();
        })
        .catch(error => {
            console.log('client saved failed')

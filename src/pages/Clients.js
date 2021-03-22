@@ -74,7 +74,7 @@ function Client() {
             ))
             }
       { modalIsShow && (
-        <ClientModal user={user} toggleModal={_toggleModal} client={client} setClient={setClient} />
+        <ClientModal getClients={_getClients} user={user} toggleModal={_toggleModal} client={client} setClient={setClient} />
       )}
 
         </div>
