@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import { motion } from 'framer-motion';
 import '../styles/ClientModal.css';
-import { addClient, updateClient, clientPasswordExists } from '../api/functions';
+import { addClient, updateClient, clientPasswordExists, clientUsernameExists } from '../api/functions';
 
 const ClientModal = ({ getClients, toggleModal, setSelectedPicture, selectedPicture, user, client}) => {
     const [name, setName] = useState('');
@@ -41,21 +41,42 @@ const ClientModal = ({ getClients, toggleModal, setSelectedPicture, selectedPict
 
     const save = () => {
        if(_checkInput()){
-           clientPasswordExists(password)
-           .then(exists => {
-               if(exists){
-                   alert('client password already exists')
+           clientUsernameExists(name)
+           .then(nameExists => {
+               if(nameExists && !client.name){
+                   alert('client name already exists')
+               }
+               else if(nameExists && client.name != name){
+                   alert('client name already exists')
                }
                else{
-                   if(client.name && client.password){
-                       console.log('update')
-                        update();
-                    }
-                    else{
-                        add();
-                    }
+                    clientPasswordExists(password)
+                        .then(exists => {
+                            if(exists && !client.password){
+                                alert('client password already exists')
+                            }
+                            else if(exists && client.password != password){
+                                alert('client password already exists')
+                            }
+                            else{
+                                if(client.name && client.password){
+                                    console.log('update')
+                                    update();
+                                }
+                                else{
+                                    add();
+                                }
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
                }
            })
+            .catch(error => {
+                console.log(error);
+            })
+        
        } 
 
     }
