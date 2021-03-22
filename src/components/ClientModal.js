@@ -72,6 +72,8 @@ const ClientModal = ({ getClients, toggleModal, setSelectedPicture, selectedPict
         .then(response => {
             console.log('client updated');
             console.log(response);
+            toggleModal();
+            getClients();
         })
         .catch(error => {
             console.log('client updated failed')
