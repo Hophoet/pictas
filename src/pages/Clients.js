@@ -29,6 +29,9 @@ function Client() {
     }
 
     const _toggleModal = () => {
+        if(modalIsShow){
+            setClient({});
+        }
         toggleModal(!modalIsShow);
     }
     
@@ -58,6 +61,11 @@ function Client() {
         }
     }
 
+    const _updateClient = (client) => {
+       setClient(client);
+       _toggleModal(); 
+    }
+
     return (
         <div className='container'>
             <h1>clients</h1>
@@ -70,6 +78,7 @@ function Client() {
                     <h4>{client.name}</h4>
                     <p>{client.password}</p>
                     <button onClick={() => _deleteClient(client.id)} >delete</button>
+                    <button onClick={() => _updateClient(client)} >update</button>
                 </div>
             ))
             }
