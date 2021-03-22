@@ -190,6 +190,30 @@ function deleteClient(id){
     })
 }
 
+
+function clientPasswordExists(password){
+	return new Promise( (resolve, reject) => {
+		firestore
+		.collection('clients')
+        .get()
+        .then( (querySnapshot) => {
+                querySnapshot.forEach( documentSnapshot  => {
+                    if(documentSnapshot.data()){
+                        console.log(documentSnapshot.data())
+                        if(documentSnapshot.data().password == password){
+                            resolve(true);
+                        }
+                    }
+                }); 
+                resolve(false);
+        })
+        .catch(error => {
+            reject(error);
+        })
+    })
+}
+
+
 export {
     getPictures,
     getClients,
@@ -198,5 +222,6 @@ export {
     getPictureClient,
     addClient,
     updateClient,
-    deleteClient
+    deleteClient,
+    clientPasswordExists
 }
