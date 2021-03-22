@@ -164,9 +164,7 @@ function updateClient(clientId, name, password){
         }
         firestore
         .doc('clients/'+clientId)
-        .update(client => {
-
-        })
+        .update(client)
         .then(response => {
             resolve(response);
         })
