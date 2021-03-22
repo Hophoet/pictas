@@ -48,10 +48,11 @@ function Client() {
         if(window.confirm('Do you want delete this client?')){
             deleteClient(id) 
             .then(response => {
-                console.log('client deleted')
+                console.log('client deleted');
+                _getClients();
             })
             .catch(error => {
-                console.log('client delete failed')
+                console.log('client delete failed');
                 console.log(error);
             })
         }
