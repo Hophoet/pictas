@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import { motion } from 'framer-motion';
 import '../styles/ClientModal.css';
-import { addClient, updateClient } from '../api/functions';
+import { addClient, updateClient, clientPasswordExists } from '../api/functions';
 
 const ClientModal = ({ getClients, toggleModal, setSelectedPicture, selectedPicture, user, client}) => {
     const [name, setName] = useState('');
@@ -41,13 +41,21 @@ const ClientModal = ({ getClients, toggleModal, setSelectedPicture, selectedPict
 
     const save = () => {
        if(_checkInput()){
-            if(client.name && client.password){
-                console.log('update')
-                update();
-            }
-            else{
-                add();
-            }
+           clientPasswordExists(password)
+           .then(exists => {
+               if(exists){
+                   alert('client password already exists')
+               }
+               else{
+                   if(client.name && client.password){
+                       console.log('update')
+                        update();
+                    }
+                    else{
+                        add();
+                    }
+               }
+           })
        } 
 
     }
