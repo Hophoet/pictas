@@ -68,17 +68,17 @@ const ClientModal = ({ getClients, toggleModal, setSelectedPicture, selectedPict
     }
 
     const update = () => {
-        updateClient(client.id)
+        updateClient(client.id, name, password)
         .then(response => {
             console.log('client updated');
             console.log(response);
         })
-       .catch(error => {
-           console.log('client updated failed')
-           console.log(error);
-       })
+        .catch(error => {
+            console.log('client updated failed')
+            console.log(error);
+        })
 
-    }
+        }
 
 
 
