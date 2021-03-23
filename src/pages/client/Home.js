@@ -1,7 +1,7 @@
 
 import React, {useState} from 'react';
 import { useStateValue } from '../../redux/StateProvider'
-import { getPictures } from '../../api/functions'
+import { getClientPictures } from '../../api/functions'
 import { useEffect } from 'react';
 import {useHistory} from 'react-router-dom'
 import {motion} from 'framer-motion';
@@ -20,25 +20,14 @@ function Home() {
 
   const history = useHistory();
 	useEffect(() => {
-        _checkAuth();
-    if(user){
-      _getPictures(user.uid)
-      
-    }
-
+        _getPictures()
   }, [user])	
   
 
-  const _checkAuth = () => {
-      if(!user){
-        //history.push('/auth');
-      }
-  }
 
   const _getPictures = () => {
-    let userId = user.uid;
-    if(userId){
-      getPictures(userId)
+    if(queries.userId && queries.clientId){
+      getClientPictures(queries.userId, queries.clientId)
       .then(response => {
         setPictures(response)
         console.log(response)
@@ -52,8 +41,8 @@ function Home() {
   return (
     <div className="home-container">
 	    <h1>Client dashboard</h1>
-        <p>user id: {queries.user}</p>
-        <p>client id: {queries.client} </p>
+        <p>user id: {queries.userId}</p>
+        <p>client id: {queries.clientId} </p>
       <div className="img-grid">
         {pictures && pictures.map(picture => (
           <motion.div className="img-wrap" key={picture.id} 
