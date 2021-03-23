@@ -10,14 +10,18 @@ import {auth} from '../firebase/config'
 import AddPictureModal from '../components/AddPictureModal'
 import { getClients } from '../api/functions'
 import { useEffect } from 'react';
-
+import {useLocation} from 'react-router-dom';
 
 function Header() {
+    const queryString = require('query-string');
     const [clients, setClients] = useState([]);
     const [{basket, user}, dispatch] = useStateValue()
     const [addPictureModalIsShow, toggleAddPictureModalIsShow] = useState(false);
+    const location = useLocation();
+    const queries = queryString.parse(location.search)
 
 	useEffect(() => {
+        console.log(location)
         _getClients();
     }, [user])	
     
@@ -50,18 +54,24 @@ function Header() {
 
     return (
         <div className='header'>
-         	<Link to="/">
+            { (user)?
+         	    (<Link to="/">
                 <h1>Pictas</h1> 
-			</Link>
+                </Link>)
+                :
+         	    (<h1>Pictas</h1>)
+            }
             <div className="header__search">
             </div>
             <div className='header__nav'>
+                { !(queries.clientId && queries.userId ) &&
                 <Link to={!user && '/auth/'}>
                     <div onClick={handleAuthentification} className="header__option">
                         <span className='header__optionLineOne'>Hello {!user?'Guest': user.email}</span>
                         <span className='header__optionLineTwo'>{user? 'Sign Out': 'Sign In'}</span>
                     </div>
                 </Link>
+                }   
                 { user &&
             	<Link to="/clients">
                     <div  className="header__option">
