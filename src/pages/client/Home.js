@@ -1,7 +1,7 @@
 
 import React, {useState} from 'react';
 import { useStateValue } from '../../redux/StateProvider'
-import { getClientPictures } from '../../api/functions'
+import { getClientPictures, getClient } from '../../api/functions'
 import { useEffect } from 'react';
 import {useHistory} from 'react-router-dom'
 import {motion} from 'framer-motion';
@@ -14,13 +14,15 @@ function Home() {
   const queryString = require('query-string');
   const [selectedPicture, setSelectedPicture] = useState(null);
   const [pictures, setPictures] = useState([]);
+  const [client, setClient] = useState({});
   const [{user}, dispatch] = useStateValue();
   const location = useLocation();
   const queries = queryString.parse(location.search)
 
   const history = useHistory();
 	useEffect(() => {
-        _getPictures()
+        _getPictures();
+        _getClient();
   }, [user])	
   
 
@@ -30,19 +32,29 @@ function Home() {
       getClientPictures(queries.userId, queries.clientId)
       .then(response => {
         setPictures(response)
-        console.log(response)
       })
       .catch(error => {
         console.log(error);
       })
     }
   }
+
+  const _getClient = () => {
+    if(queries.userId && queries.clientId){
+        getClient(queries.clientId)
+        .then(response => {
+            setClient(response);
+        })
+      .catch(error => {
+        console.log(error);
+      })
+
+    }
+  }
   
   return (
     <div className="home-container">
-	    <h1>Client dashboard</h1>
-        <p>user id: {queries.userId}</p>
-        <p>client id: {queries.clientId} </p>
+	    <h1>{client && client.name}</h1>
       <div className="img-grid">
         {pictures && pictures.map(picture => (
           <motion.div className="img-wrap" key={picture.id} 
