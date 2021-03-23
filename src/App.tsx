@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import {auth} from './firebase/config'
 import Header from './pages/Header'
 import Clients from './pages/Clients';
+import ClientHome from './pages/client/Home';
 
 function App() {
 	const [{user}, dispatch] = useStateValue()
@@ -38,6 +39,10 @@ function App() {
         <Switch>
           <Route path="/auth">
             <Auth/>
+          </Route>
+          <Route path="/client">
+			<Header/>
+            <ClientHome/>
           </Route>
           <Route path="/clients">
 			<Header/>
