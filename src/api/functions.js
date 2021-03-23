@@ -191,6 +191,26 @@ function deleteClient(id){
 }
 
 
+// get client with id
+function getClient(id){
+    return new Promise( (resolve, reject) => { 
+        firestore
+        .collection('clients')
+        .doc(id)
+		.onSnapshot( (documentSnapshot) => {
+			//client is available case
+			if(documentSnapshot.data()){
+				resolve(documentSnapshot.data());
+			}
+			//client is not available, maybe deleted
+			else{
+				reject('client not exists');
+			}
+		})
+    })
+}
+
+
 function clientPasswordExists(password){
 	return new Promise( (resolve, reject) => {
 		firestore
@@ -271,5 +291,6 @@ export {
     deleteClient,
     clientPasswordExists,
     clientUsernameExists,
-    getClientPictures
+    getClientPictures,
+    getClient
 }
