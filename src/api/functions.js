@@ -237,6 +237,29 @@ function clientUsernameExists(name){
 }
 
 
+function getClientPictures(userId, clientId){
+   return new Promise( (resolve, reject) => {
+       firestore
+       .collection('pictures')
+       .where('userId', '==', userId)
+       .where('clientId', '==', clientId)
+       .get()
+       .then( (querySnapshot) => {
+            let pictures = []
+            querySnapshot.forEach( documentSnapshot  => {
+                if(documentSnapshot.data()){
+                    pictures.push(documentSnapshot.data())
+                }
+            }); 
+            resolve(pictures);
+       })
+       .catch(error => {
+           reject(error);
+       })
+   })
+}
+
+
 export {
     getPictures,
     getClients,
@@ -247,5 +270,6 @@ export {
     updateClient,
     deleteClient,
     clientPasswordExists,
-    clientUsernameExists
+    clientUsernameExists,
+    getClientPictures
 }
