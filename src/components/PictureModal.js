@@ -2,8 +2,12 @@ import React, {useState, useEffect} from 'react';
 import { motion } from 'framer-motion';
 import '../styles/PictureModal.css';
 import { getPictureClient } from '../api/functions'
+import DownloadIcon from '@material-ui/icons/CloudDownload'
+import { useStateValue } from '../redux/StateProvider'
+
 
 const PictureModal = ({ setSelectedPicture, selectedPicture }) => {
+    const [{user}, dispatch] = useStateValue()
     const [client, setClient] = useState([]);
 
     useEffect(() => {
@@ -29,6 +33,8 @@ const PictureModal = ({ setSelectedPicture, selectedPicture }) => {
         })
     }
 
+
+
   return (
     <motion.div className="backdrop" onClick={handleClick}
       initial={{ opacity: 0 }}
@@ -38,6 +44,7 @@ const PictureModal = ({ setSelectedPicture, selectedPicture }) => {
             initial={{ y: "-100vh" }}
             animate={{ y: 0 }}
         />
+        { user &&
         <div className='picture-modal-footer'
         >
             { client &&
@@ -46,8 +53,15 @@ const PictureModal = ({ setSelectedPicture, selectedPicture }) => {
                 <p>password: {client.password}</p>
             </div>
             }
-            <button>delete</button>
+            <a 
+                href={selectedPicture.url+"?force=true"} 
+                >
+                <DownloadIcon/>
+            </a>
+            <button
+            >delete</button>
         </div>
+        }
     
     </motion.div>
   )
