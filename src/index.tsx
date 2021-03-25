@@ -7,6 +7,8 @@ import { StateProvider } from './redux/StateProvider';
 import { intialState } from './redux/reducer'
 import reducer from './redux/reducer'
 
+import "@coreui/coreui/scss/coreui.scss";
+
 ReactDOM.render(
   <React.StrictMode>
     <StateProvider initialState={intialState} reducer={reducer}>
