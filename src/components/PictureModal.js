@@ -5,6 +5,10 @@ import { getPictureClient, deleteImage, deletePicture } from '../api/functions'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
 import { useStateValue } from '../redux/StateProvider'
 
+import {
+  CButtonGroup,
+  CButton
+} from '@coreui/react'
 
 const PictureModal = ({ setSelectedPicture, selectedPicture, getPictures }) => {
     const [{user}, dispatch] = useStateValue()
@@ -92,15 +96,17 @@ const PictureModal = ({ setSelectedPicture, selectedPicture, getPictures }) => {
         { user &&
         <div className='picture-modal-footer'
         >
-            { client &&
+            { client.name &&
             <div>
                 <p>name: {client.name}</p>
                 <p>password: {client.password}</p>
                 {/* jk */}
             </div>
             }
-            <button onClick={_copyClientURL} >copy url</button>
-            <button onClick={_delete} >delete</button>
+            <CButtonGroup>
+                {client.name && <CButton onClick={_copyClientURL} color="info">Copier url</CButton>}
+                <CButton onClick={_delete}color="danger">Delete</CButton>
+            </CButtonGroup>
         </div>
         }
     
