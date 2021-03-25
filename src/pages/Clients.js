@@ -10,6 +10,19 @@ import { getClients, deleteClient } from '../api/functions'
 import { useEffect } from 'react';
 import ClientModal from '../components/ClientModal';
 
+import {
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CDataTable,
+  CRow,
+  CButton
+} from '@coreui/react'
+
+
+
+const fields = ['name','url', 'update', 'delete'];
 
 function Client() {
     const [clients, setClients] = useState([]);
@@ -67,26 +80,57 @@ function Client() {
     }
 
     return (
-        <div className='container'>
-            <h1>clients</h1>
-            <button onClick={_toggleModal}>
-                <PersonAdd/> 
-            </button>
-            <p onClick={_deleteClient}>text client</p>
-            {clients && clients.map(client => (
-                <div>
-                    <h4>{client.name}</h4>
-                    <p>{client.password}</p>
-                    <button onClick={() => _deleteClient(client.id)} >delete</button>
-                    <button onClick={() => _updateClient(client)} >update</button>
-                </div>
-            ))
-            }
+
+    <>
+      <CRow>
+        <CCol>
+          <CCard>
+            <CCardHeader>
+              <CButton  onClick={_toggleModal} color="success" className="">
+                <PersonAdd/>     
+              </CButton>
+            </CCardHeader>
+            <CCardBody>
+            <CDataTable
+              items={clients}
+              fields={fields}
+              hover
+              striped
+              bordered
+              size="sm"
+              itemsPerPage={5}
+              pagination
+              scopedSlots = {{
+                'update':
+                  (client)=>(
+                    <td>
+                        <CButton onClick={() => _updateClient(client)} color="primary" >update</CButton>
+                    </td>
+                  ),
+                'delete':
+                  (client)=>(
+                    <td>
+                        <CButton onClick={() => _deleteClient(client.id)} color="danger" >delete</CButton>
+                    </td>
+                  ),
+                'url':
+                  (client)=>(
+                    <td>
+                        <CButton onClick={() => _deleteClient(client.id)} color="info" >copier</CButton>
+                    </td>
+                  )
+
+                
+              }}
+            />
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
       { modalIsShow && (
         <ClientModal getClients={_getClients} user={user} toggleModal={_toggleModal} client={client} setClient={setClient} />
-      )}
-
-        </div>
+      )} 
+    </>
     )
 }
 
