@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { motion } from 'framer-motion';
 import '../styles/PictureModal.css';
-import { getPictureClient } from '../api/functions'
+import { getPictureClient, deleteImage } from '../api/functions'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
 import { useStateValue } from '../redux/StateProvider'
 
@@ -37,7 +37,15 @@ const PictureModal = ({ setSelectedPicture, selectedPicture }) => {
     const _delete = () => {
         const label = (client.name)?client.name:'this';
         if(window.confirm('Do you want to delete '+label+' picture ?')){
-            alert('ready to be delete')
+            deleteImage(selectedPicture.url)
+            .then(response => {
+                console.log('image deleted');
+                console.log(response);
+            })
+            .catch(error => {
+                console.log('image delete failed');
+                console.log(error);
+            })
         }
     }
 
