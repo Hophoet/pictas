@@ -4,6 +4,19 @@ import { motion } from 'framer-motion';
 import '../styles/ClientModal.css';
 import { addClient, updateClient, clientPasswordExists, clientUsernameExists } from '../api/functions';
 
+import {
+  CContainer,
+  CRow,
+  CForm,
+  CCol,
+  CFormGroup,
+  CLabel,
+  CInput,
+  CFormText,
+  CButton
+} from '@coreui/react'
+
+
 const ClientModal = ({ getClients, toggleModal, setSelectedPicture, selectedPicture, user, client}) => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
@@ -124,19 +137,41 @@ const ClientModal = ({ getClients, toggleModal, setSelectedPicture, selectedPict
                     className="modalcontainer"
                 >
             
-                    <div className="imagecontainer">
-                            <div className="output">
-                                <input value={name} placeholder='Client name'
+                    <CContainer>
+                        <CRow>
+                            <CCol sm="12">
+                            <CForm action="" method="post">
+                                <CFormGroup>
+                                <CLabel htmlFor="nf-name">Name</CLabel>
+                                <CInput
+                                    value={name}
+                                    type="text"
+                                    id="nf-name"
+                                    placeholder="Enter Name.."
                                     onChange={
                                         e => setName(e.target.value)}
                                 />
-                                <input value={password} type='text' placeholder='Client password'
+                                <CFormText className="help-block">Please enter the client your name</CFormText>
+                                </CFormGroup>
+                                <CFormGroup>
+                                <CLabel htmlFor="nf-password">Password</CLabel>
+                                <CInput
+                                    value={password}
+                                    type="text"
+                                    id="nf-password"
+                                    name="nf-password"
+                                    placeholder="Enter Password.."
+                                    autoComplete="current-password"
                                     onChange={
                                         e => setPassword(e.target.value)}
                                 />
-                                <button onClick={save}>{(client.name && client.password)?'update':'add'}</button>
-                            </div>
-                    </div>
+                                <CFormText className="help-block">Please enter the client password</CFormText>
+                                </CFormGroup>
+                                <CButton onClick={save} color="primary" className="">{(client.name && client.password)?'update':'add'}</CButton>
+                            </CForm>
+                            </CCol>
+                        </CRow>
+                    </CContainer>
                 </motion.div>
             </motion.div>
   )
