@@ -85,7 +85,7 @@ function setPicture(userId, clientId, url){
     })
 }
 
-function deletePicture(id, url){
+function deletePictureObject(id, url){
     return new Promise( (resolve, reject) => { 
         storage.refFromURL(url)
         .delete()
@@ -280,7 +280,7 @@ function getClientPictures(userId, clientId){
 }
 
 
-//method to delete image from firebase storage
+// function to delete image from firebase storage
 function deleteImage(url){
     return new Promise( (resolve, reject) => {  
         storage.refFromURL(url)
@@ -294,6 +294,21 @@ function deleteImage(url){
    })
 }
 
+// function to delete picture object
+function deletePicture(id){
+    return new Promise( (resolve, reject) => { 
+        firestore
+        .collection('pictures')
+        .doc(id)
+        .delete()
+        .then(response => {
+            resolve(response);
+        })
+        .catch(error => {
+            reject(error);
+        })
+    })
+}
 
 
 
@@ -312,5 +327,6 @@ export {
     clientUsernameExists,
     getClientPictures,
     getClient,
-    deleteImage
+    deleteImage,
+    deletePicture
 }
