@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { motion } from 'framer-motion';
 import '../styles/PictureModal.css';
-import { getPictureClient, deleteImage } from '../api/functions'
+import { getPictureClient, deleteImage, deletePicture } from '../api/functions'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
 import { useStateValue } from '../redux/StateProvider'
 
@@ -41,10 +41,26 @@ const PictureModal = ({ setSelectedPicture, selectedPicture }) => {
             .then(response => {
                 console.log('image deleted');
                 console.log(response);
+                deletePicture(selectedPicture.id)
+                .then(response => {
+                    alert('picture deleted')
+                })
+                .catch(error => {
+                    alert(error.code)
+                })
             })
             .catch(error => {
                 console.log('image delete failed');
                 console.log(error);
+                if( error.code == 'storage/object-not-found'){
+                    deletePicture(selectedPicture.id)
+                    .then(response => {
+                        alert('picture deleted')
+                    })
+                    .catch(error => {
+                        alert(error.code)
+                    })
+                }
             })
         }
     }
