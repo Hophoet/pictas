@@ -6,7 +6,7 @@ import DownloadIcon from '@material-ui/icons/CloudDownload'
 import { useStateValue } from '../redux/StateProvider'
 
 
-const PictureModal = ({ setSelectedPicture, selectedPicture }) => {
+const PictureModal = ({ setSelectedPicture, selectedPicture, getPictures }) => {
     const [{user}, dispatch] = useStateValue()
     const [client, setClient] = useState([]);
 
@@ -33,6 +33,11 @@ const PictureModal = ({ setSelectedPicture, selectedPicture }) => {
         })
     }
 
+    const _hideModal = () => {
+        getPictures();
+        setSelectedPicture(null);
+    }
+
 
     const _delete = () => {
         const label = (client.name)?client.name:'this';
@@ -43,7 +48,7 @@ const PictureModal = ({ setSelectedPicture, selectedPicture }) => {
                 console.log(response);
                 deletePicture(selectedPicture.id)
                 .then(response => {
-                    alert('picture deleted')
+                    _hideModal()
                 })
                 .catch(error => {
                     alert(error.code)
@@ -55,7 +60,7 @@ const PictureModal = ({ setSelectedPicture, selectedPicture }) => {
                 if( error.code == 'storage/object-not-found'){
                     deletePicture(selectedPicture.id)
                     .then(response => {
-                        alert('picture deleted')
+                        _hideModal()
                     })
                     .catch(error => {
                         alert(error.code)
