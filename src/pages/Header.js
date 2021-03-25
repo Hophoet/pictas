@@ -12,10 +12,15 @@ import { getClients } from '../api/functions'
 import { useEffect } from 'react';
 import {useLocation} from 'react-router-dom';
 
+import {
+  CButtonGroup,
+  CButton
+} from '@coreui/react'
+
 function Header() {
     const queryString = require('query-string');
     const [clients, setClients] = useState([]);
-    const [{basket, user}, dispatch] = useStateValue()
+    const [{user}, dispatch] = useStateValue()
     const [addPictureModalIsShow, toggleAddPictureModalIsShow] = useState(false);
     const location = useLocation();
     const queries = queryString.parse(location.search)
@@ -82,9 +87,9 @@ function Header() {
                 }
                 <div className="header__option">
                     { user &&
-                    <button onClick={addPicture}>
+                    <CButton onClick={addPicture} color="primary">
                         <AddAPhotoIcon/>
-                    </button>
+                    </CButton>
                     }
                 </div>
                 
