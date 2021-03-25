@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import {useHistory} from 'react-router-dom'
 import {motion} from 'framer-motion';
 import '../styles/Home.css';
+import banner from '../assets/ban.jpg'
 import PictureModal from '../components/PictureModal';
 
 
@@ -26,9 +27,7 @@ function Home() {
   
 
   const _checkAuth = () => {
-      if(!user){
-        //history.push('/auth');
-      }
+          //history.push('/auth');
   }
 
   const _getPictures = () => {
@@ -47,6 +46,11 @@ function Home() {
   
   return (
     <div className="home-container">
+      <img
+          className="home__image"
+          src={banner}
+          alt="banner"
+      />
       <div className="img-grid">
         {pictures && pictures.map(picture => (
           <motion.div className="img-wrap" key={picture.id} 
@@ -63,7 +67,7 @@ function Home() {
         ))}
       </div>
       { selectedPicture && (
-        <PictureModal selectedPicture={selectedPicture} setSelectedPicture={setSelectedPicture} />
+        <PictureModal getPictures={_getPictures} selectedPicture={selectedPicture} setSelectedPicture={setSelectedPicture} />
       )}
     </div>
   );
