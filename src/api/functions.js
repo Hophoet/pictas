@@ -280,6 +280,25 @@ function getClientPictures(userId, clientId){
 }
 
 
+//method to delete image from firebase storage
+function deleteImage(url){
+    return new Promise( (resolve, reject) => {  
+        storage.refFromURL(url)
+        .delete()
+        .then(response =>  {
+            resolve(response);
+        })
+        .catch(error => {
+            reject(error);
+        })
+   })
+}
+
+
+
+
+
+
 export {
     getPictures,
     getClients,
@@ -292,5 +311,6 @@ export {
     clientPasswordExists,
     clientUsernameExists,
     getClientPictures,
-    getClient
+    getClient,
+    deleteImage
 }
