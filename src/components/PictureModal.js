@@ -70,6 +70,14 @@ const PictureModal = ({ setSelectedPicture, selectedPicture, getPictures }) => {
         }
     }
 
+    const _copyClientURL = () => {
+        let hostname = window.location.hostname;
+        let clientId = client.id;
+        let userId = user.uid;
+        let url = hostname+':3000/client?clientId='+clientId+'&userId='+userId;
+        navigator.clipboard.writeText(url);
+    }
+
 
 
   return (
@@ -88,16 +96,11 @@ const PictureModal = ({ setSelectedPicture, selectedPicture, getPictures }) => {
             <div>
                 <p>name: {client.name}</p>
                 <p>password: {client.password}</p>
+                {/* jk */}
             </div>
             }
-            <a 
-                href={selectedPicture.url+"?force=true"} 
-                >
-                <DownloadIcon/>
-            </a>
-            <button
-                onClick={_delete}
-            >delete</button>
+            <button onClick={_copyClientURL} >copy url</button>
+            <button onClick={_delete} >delete</button>
         </div>
         }
     
