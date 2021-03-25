@@ -34,6 +34,14 @@ const PictureModal = ({ setSelectedPicture, selectedPicture }) => {
     }
 
 
+    const _delete = () => {
+        const label = (client.name)?client.name:'this';
+        if(window.confirm('Do you want to delete '+label+' picture ?')){
+            alert('ready to be delete')
+        }
+    }
+
+
 
   return (
     <motion.div className="backdrop" onClick={handleClick}
@@ -59,6 +67,7 @@ const PictureModal = ({ setSelectedPicture, selectedPicture }) => {
                 <DownloadIcon/>
             </a>
             <button
+                onClick={_delete}
             >delete</button>
         </div>
         }
